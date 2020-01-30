@@ -24,6 +24,21 @@ class LibkmlConan(ConanFile):
     def _build_subfolder(self):
         return "build_subfolder"
 
+    def configure(self):
+        self._validate_compiler_settings()
+
+    def _validate_compiler_settings(self):
+        compiler = self.settings.compiler
+        version = tools.Version(self.settings.compiler.version.value)
+
+        if compiler == "gcc" and version >= "5" and compiler.libcxx != "libstdc++11":
+            raise ConanInvalidConfiguration(
+                'Using libkml with GCC >= 5 on Linux requires "compiler.libcxx=libstdc++11"')
+        elif compiler == "clang" and compiler.libcxx not in ["libstdc++11", "libc++"]:
+            raise ConanInvalidConfiguration(
+                'Using libkml with Clang on Linux requires either "compiler.libcxx=libstdc++11" ' \
+                'or "compiler.libcxx=libc++"')
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
