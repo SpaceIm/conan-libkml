@@ -49,7 +49,7 @@ class LibkmlConan(ConanFile):
         tools.replace_in_file(uri_parser_cc_path, "memset", "std::memset")
 
         kml_handler_ns_cc_path = os.path.join(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc")
-        tools.replace_in_file(kml_handler_ns_cc_path, "#include <cstring>  // For strchr().", "")
+        tools.replace_in_file(kml_handler_ns_cc_path, "#include <string.h>  // For strchr().", "")
 
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindMiniZip.cmake"))
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindUriParser.cmake"))
