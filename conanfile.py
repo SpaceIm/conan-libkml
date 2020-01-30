@@ -35,20 +35,21 @@ class LibkmlConan(ConanFile):
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
 
-        cstring_files = [
-            os.path.join(self._source_subfolder, "src", "kml", "base", "file_posix.cc"),
-            os.path.join(self._source_subfolder, "src", "kml", "base", "string_util.cc"),
-            os.path.join(self._source_subfolder, "src", "kml", "base", "uri_parser.cc"),
-        ]
-        for cstring_file in cstring_files:
-            tools.replace_in_file(cstring_file, "#include <string.h>", "include <cstring>")
-            tools.replace_in_file(cstring_file, "strlen", "std::strlen") # file_posix.cc
-            tools.replace_in_file(cstring_file, "memcpy", "std::memcpy") # string_util.cc
-            tools.replace_in_file(cstring_file, "strchr", "std::strchr") # string_util.cc
-            tools.replace_in_file(cstring_file, "memset", "std::memset") # uri_parser.cc
-        tools.replace_in_file(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc",
-                              "#include <cstring>  // For strchr().",
-                              "")
+        file_posix_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "file_posix.cc")
+        tools.replace_in_file(file_posix_cc_path, "#include <string.h>", "include <cstring>")
+        tools.replace_in_file(file_posix_cc_path, "strlen", "std::strlen")
+
+        string_util_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "string_util.cc")
+        tools.replace_in_file(string_util_cc_path, "#include <string.h>", "include <cstring>")
+        tools.replace_in_file(string_util_cc_path, "memcpy", "std::memcpy")
+        tools.replace_in_file(string_util_cc_path, "strchr", "std::strchr")
+
+        uri_parser_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "uri_parser.cc")
+        tools.replace_in_file(uri_parser_cc_path, "#include <string.h>", "include <cstring>")
+        tools.replace_in_file(uri_parser_cc_path, "memset", "std::memset")
+
+        kml_handler_ns_cc_path = os.path.join(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc")
+        tools.replace_in_file(kml_handler_ns_cc_path, "#include <cstring>  // For strchr().", "")
 
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindMiniZip.cmake"))
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindUriParser.cmake"))
