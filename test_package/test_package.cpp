@@ -1,10 +1,10 @@
+#include <iostream>
+#include <string>
+
 #include <kml/base/math_util.h>
 #include <kml/convenience/convenience.h>
 #include <kml/dom.h>
 #include <kml/engine.h>
-
-#include <iostream>
-#include <string>
 
 void test_kmlbase() {
   double lat_from = 23.27;
