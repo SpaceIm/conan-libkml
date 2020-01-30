@@ -1,0 +1,41 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -110,17 +110,17 @@ else()
+   list(APPEND MINIZIP_DEPENDS ZLIB)
+ endif()
+ 
+-find_package(MiniZip)
+-if(MINIZIP_FOUND)
+-  include_directories(${MINIZIP_INCLUDE_DIR})
++find_package(minizip)
++if(minizip_FOUND)
++  include_directories(${minizip_INCLUDE_DIR})
+ else()
+   include(External_minizip)
+   list(APPEND KMLBASE_DEPENDS MINIZIP)
+ endif()
+ 
+-find_package(UriParser)
+-if(URIPARSER_FOUND)
+-  include_directories(${URIPARSER_INCLUDE_DIR})
++find_package(uriparser)
++if(uriparser_FOUND)
++  include_directories(${uriparser_INCLUDE_DIR})
+ else()
+   include(External_uriparser)
+   list(APPEND KMLBASE_DEPENDS URIPARSER)
+@@ -149,10 +149,10 @@ if(WITH_WIG)
+   endif()
+ endif()
+ 
+-list(APPEND KMLBASE_LINK_LIBS ${EXPAT_LIBRARY})
+-list(APPEND KMLBASE_LINK_LIBS ${ZLIB_LIBRARY})
+-list(APPEND KMLBASE_LINK_LIBS ${MINIZIP_LIBRARY})
+-list(APPEND KMLBASE_LINK_LIBS ${URIPARSER_LIBRARY})
++list(APPEND KMLBASE_LINK_LIBS ${EXPAT_LIBRARIES})
++list(APPEND KMLBASE_LINK_LIBS ${ZLIB_LIBRARIES})
++list(APPEND KMLBASE_LINK_LIBS ${minizip_LIBRARIES})
++list(APPEND KMLBASE_LINK_LIBS ${uriparser_LIBRARIES})
+ 
+ include_directories(${CMAKE_SOURCE_DIR}/src)
+ 
