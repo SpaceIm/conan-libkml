@@ -39,10 +39,16 @@ class LibkmlConan(ConanFile):
             os.path.join(self._source_subfolder, "src", "kml", "base", "file_posix.cc"),
             os.path.join(self._source_subfolder, "src", "kml", "base", "string_util.cc"),
             os.path.join(self._source_subfolder, "src", "kml", "base", "uri_parser.cc"),
-            os.path.join(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc")
         ]
         for cstring_file in cstring_files:
             tools.replace_in_file(cstring_file, "#include <string.h>", "include <cstring>")
+            tools.replace_in_file(cstring_file, "strlen", "std::strlen") # file_posix.cc
+            tools.replace_in_file(cstring_file, "memcpy", "std::memcpy") # string_util.cc
+            tools.replace_in_file(cstring_file, "strchr", "std::strchr") # string_util.cc
+            tools.replace_in_file(cstring_file, "memset", "std::memset") # uri_parser.cc
+        tools.replace_in_file(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc",
+                              "#include <cstring>  // For strchr().",
+                              "")
 
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindMiniZip.cmake"))
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindUriParser.cmake"))
