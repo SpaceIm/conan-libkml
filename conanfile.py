@@ -1,7 +1,6 @@
 import os
 
 from conans import ConanFile, CMake, tools
-from conans.errors import ConanInvalidConfiguration
 
 class LibkmlConan(ConanFile):
     name = "libkml"
@@ -34,23 +33,6 @@ class LibkmlConan(ConanFile):
         os.rename(self.name + "-" + self.version, self._source_subfolder)
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
-
-        file_posix_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "file_posix.cc")
-        tools.replace_in_file(file_posix_cc_path, "#include <string.h>", "#include <cstring>")
-        tools.replace_in_file(file_posix_cc_path, "strlen", "std::strlen")
-
-        string_util_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "string_util.cc")
-        tools.replace_in_file(string_util_cc_path, "#include <string.h>", "#include <cstring>")
-        tools.replace_in_file(string_util_cc_path, "memcpy", "std::memcpy")
-        tools.replace_in_file(string_util_cc_path, "strchr", "std::strchr")
-
-        uri_parser_cc_path = os.path.join(self._source_subfolder, "src", "kml", "base", "uri_parser.cc")
-        tools.replace_in_file(uri_parser_cc_path, "#include <string.h>", "#include <cstring>")
-        tools.replace_in_file(uri_parser_cc_path, "memset", "std::memset")
-
-        kml_handler_ns_cc_path = os.path.join(self._source_subfolder, "src", "kml", "dom", "kml_handler_ns.cc")
-        tools.replace_in_file(kml_handler_ns_cc_path, "#include <string.h>  // For strchr().", "")
-
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindMiniZip.cmake"))
         os.remove(os.path.join(self._source_subfolder, "cmake", "FindUriParser.cmake"))
 
