@@ -1,6 +1,7 @@
 import os
 
 from conans import ConanFile, CMake, tools
+from conans.errors import ConanInvalidConfiguration
 
 class LibkmlConan(ConanFile):
     name = "libkml"
@@ -27,6 +28,10 @@ class LibkmlConan(ConanFile):
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
+
+    def configure(self):
+        if self.settings.os == "Macos" and self.options.shared:
+            raise ConanInvalidConfiguration("just a test")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
