@@ -1,5 +1,14 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -80,7 +80,7 @@ set(INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" CACHE "install directory " PATH)
+ 
+ # Path to additional CMake modules
+ set(CMAKE_MODULE_PATH
+-    ${CMAKE_SOURCE_DIR}/cmake
++    ${CMAKE_CURRENT_SOURCE_DIR}/cmake
+     ${CMAKE_MODULE_PATH})
+ 
+ include(LibKMLHelper)
 @@ -93,49 +93,7 @@ set(MINIZIP_DEPENDS "" CACHE INTERNAL "MINIZIP_DEPENDS")
  
  set(LIBKML_TARGETS)
@@ -51,7 +60,7 @@
  
  if(WITH_SWIG)
    find_package(SWIG)
-@@ -149,10 +107,10 @@ if(WITH_SWIG)
+@@ -149,16 +107,16 @@ if(WITH_SWIG)
    endif()
  endif()
  
@@ -64,5 +73,22 @@
 +list(APPEND KMLBASE_LINK_LIBS ${CONAN_LIBS_MINIZIP})
 +list(APPEND KMLBASE_LINK_LIBS ${CONAN_LIBS_URIPARSER})
  
- include_directories(${CMAKE_SOURCE_DIR}/src)
+-include_directories(${CMAKE_SOURCE_DIR}/src)
++include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+ 
+ add_subdirectory(src)
+ 
+-configure_file("${CMAKE_SOURCE_DIR}/cmake/libkml.pc.in"
++configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/libkml.pc.in"
+   "${CMAKE_BINARY_DIR}/libkml.pc" @ONLY)
+ 
+ install(FILES ${CMAKE_BINARY_DIR}/libkml.pc
+@@ -195,7 +153,7 @@ file(RELATIVE_PATH REL_INCLUDE_DIR "${CMAKE_INSTALL_DIR}"
+   "${INCLUDE_INSTALL_DIR}")
+ 
+ # ... for the build tree
+-set(CONF_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/src")
++set(CONF_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/src")
+ configure_file(cmake/LibKMLConfig.cmake.in
+   "${PROJECT_BINARY_DIR}/LibKMLConfig.cmake" @ONLY)
  
