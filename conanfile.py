@@ -10,7 +10,7 @@ class LibkmlConan(ConanFile):
     homepage = "https://github.com/libkml/libkml"
     url = "https://github.com/conan-io/conan-center-index"
     exports_sources = ["CMakeLists.txt", "patches/**"]
-    generators = "cmake", "cmake_find_package"
+    generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
     requires = ["boost/1.72.0", "expat/2.2.9", "minizip/1.2.11", "uriparser/0.9.3", "zlib/1.2.11"]
     options = {"shared": [True, False], "fPIC": [True, False]}
@@ -33,8 +33,6 @@ class LibkmlConan(ConanFile):
         os.rename(self.name + "-" + self.version, self._source_subfolder)
         for patch in self.conan_data["patches"][self.version]:
             tools.patch(**patch)
-        os.remove(os.path.join(self._source_subfolder, "cmake", "FindMiniZip.cmake"))
-        os.remove(os.path.join(self._source_subfolder, "cmake", "FindUriParser.cmake"))
 
     def build(self):
         cmake = self._configure_cmake()
@@ -42,7 +40,7 @@ class LibkmlConan(ConanFile):
 
     def _configure_cmake(self):
         cmake = CMake(self)
-        cmake.configure(build_folder=self._build_subfolder, source_folder=self._source_subfolder)
+        cmake.configure(build_folder=self._build_subfolder)
         return cmake
 
     def package(self):
