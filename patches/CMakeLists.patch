@@ -1,6 +1,23 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -80,7 +80,7 @@ set(INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" CACHE "install directory " PATH)
+@@ -19,7 +19,7 @@ option(WITH_SWIG   "Build all swig bindings"   OFF)
+ option(WITH_PYTHON "Build python bindings" OFF)
+ option(WITH_JAVA   "Build java bindings"   OFF)
+ 
+-set(LIBKML_DATA_DIR  ${CMAKE_SOURCE_DIR}/testdata CACHE "Directory containing test data" PATH)
++set(LIBKML_DATA_DIR  ${CMAKE_CURRENT_SOURCE_DIR}/testdata CACHE "Directory containing test data" PATH)
+ 
+ #AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -pedantic -fno-rtti
+ #AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -fno-rtti -DGTEST_HAS_RTTI=0
+@@ -30,7 +30,6 @@ set(TEST_FLAGS "-Wall -Wextra -Wno-unused-parameter -fno-rtti -DGTEST_HAS_RTTI=0
+ else()
+  if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /DUNICODE /D_UNICODE")
+-   set(BUILD_SHARED_LIBS OFF)
+  endif()
+ endif()
+ 
+@@ -80,7 +79,7 @@ set(INSTALL_DIR "${CMAKE_INSTALL_PREFIX}" CACHE "install directory " PATH)
  
  # Path to additional CMake modules
  set(CMAKE_MODULE_PATH
@@ -9,7 +26,7 @@
      ${CMAKE_MODULE_PATH})
  
  include(LibKMLHelper)
-@@ -93,49 +93,7 @@ set(MINIZIP_DEPENDS "" CACHE INTERNAL "MINIZIP_DEPENDS")
+@@ -93,49 +92,7 @@ set(MINIZIP_DEPENDS "" CACHE INTERNAL "MINIZIP_DEPENDS")
  
  set(LIBKML_TARGETS)
  
@@ -60,7 +77,7 @@
  
  if(WITH_SWIG)
    find_package(SWIG)
-@@ -149,16 +107,16 @@ if(WITH_SWIG)
+@@ -149,16 +106,16 @@ if(WITH_SWIG)
    endif()
  endif()
  
@@ -83,7 +100,16 @@
    "${CMAKE_BINARY_DIR}/libkml.pc" @ONLY)
  
  install(FILES ${CMAKE_BINARY_DIR}/libkml.pc
-@@ -195,7 +153,7 @@ file(RELATIVE_PATH REL_INCLUDE_DIR "${CMAKE_INSTALL_DIR}"
+@@ -168,7 +125,7 @@ if(BUILD_TESTING)
+   enable_testing()
+   find_package(GoogleTest REQUIRED)
+   include_directories(${GTEST_INCLUDE_DIR})
+-  include_directories(${CMAKE_SOURCE_DIR}/tests)
++  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+   add_definitions("-DDATADIR=\"${LIBKML_DATA_DIR}\"")
+   add_subdirectory(tests)
+ endif()
+@@ -195,7 +152,7 @@ file(RELATIVE_PATH REL_INCLUDE_DIR "${CMAKE_INSTALL_DIR}"
    "${INCLUDE_INSTALL_DIR}")
  
  # ... for the build tree

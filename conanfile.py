@@ -14,7 +14,7 @@ class LibkmlConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     requires = ["boost/1.72.0", "expat/2.2.9", "minizip/1.2.11", "uriparser/0.9.3", "zlib/1.2.11"]
     options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": True, "fPIC": True}
+    default_options = {"shared": False, "fPIC": True}
 
     @property
     def _source_subfolder(self):
