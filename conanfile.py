@@ -1,7 +1,6 @@
 import os
 
 from conans import ConanFile, CMake, tools
-from conans.errors import ConanInvalidConfiguration
 
 class LibkmlConan(ConanFile):
     name = "libkml"
@@ -28,11 +27,6 @@ class LibkmlConan(ConanFile):
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
-
-    def configure(self):
-        if self.settings.os == "Windows" and self.options.shared:
-            raise ConanInvalidConfiguration("{0} {1} does not support to be compiled as shared library " \
-                                            "on {2}".format(self.name, self.version, str(self.settings.os)))
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])

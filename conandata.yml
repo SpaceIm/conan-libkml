@@ -8,3 +8,5 @@ patches:
       base_path: "source_subfolder"
     - patch_file: "patches/empty_literal_on_vc.patch"
       base_path: "source_subfolder"
+    - patch_file: "patches/extern_msvc.patch"
+      base_path: "source_subfolder"
