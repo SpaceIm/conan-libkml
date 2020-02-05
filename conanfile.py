@@ -80,5 +80,5 @@ class LibkmlConan(ConanFile):
 
         self.output.info("LIBRARIES: %s" % self.cpp_info.libs)
 
-        if self.settings.os == "Windows" and self.settings.shared:
+        if self.settings.os == "Windows" and self.options.shared:
             self.cpp_info.defines.append("LIBKML_DLL")
