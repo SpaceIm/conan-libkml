@@ -79,3 +79,6 @@ class LibkmlConan(ConanFile):
                                       for item in sublist if sublist] + missing_order_info
 
         self.output.info("LIBRARIES: %s" % self.cpp_info.libs)
+
+        if self.settings.os == "Windows" and self.settings.shared:
+            self.cpp_info.defines.append("LIBKML_DLL")
