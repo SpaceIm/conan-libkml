@@ -12,7 +12,6 @@ class LibkmlConan(ConanFile):
     exports_sources = ["CMakeLists.txt", "patches/**"]
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
-    requires = ["boost/1.72.0", "expat/2.2.9", "minizip/1.2.11", "uriparser/0.9.3", "zlib/1.2.11"]
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
 
@@ -29,6 +28,13 @@ class LibkmlConan(ConanFile):
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
+
+    def requirements(self):
+        self.requires.add("boost/1.72.0")
+        self.requires.add("expat/2.2.9")
+        self.requires.add("minizip/1.2.11")
+        self.requires.add("uriparser/0.9.3")
+        self.requires.add("zlib/1.2.11")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
