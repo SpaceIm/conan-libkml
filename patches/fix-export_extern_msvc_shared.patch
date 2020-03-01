@@ -36,7 +36,7 @@
  #ifndef KML_BASE_MIMETYPES_H__
  #define KML_BASE_MIMETYPES_H__
  
-+#if defined(_WIN32) && defined(LIBKML_DLL)
++#if defined(_MSC_VER) && defined(LIBKML_DLL)
 +  #ifdef KML_BASE_MIMETYPE_EXPORTS
 +    #define KML_BASE_MIMETYPE_API __declspec(dllexport)
 +  #else

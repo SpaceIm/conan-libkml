@@ -6,7 +6,7 @@ patches:
   "1.3.0":
     - patch_file: "patches/CMakeLists.patch"
       base_path: "source_subfolder"
-    - patch_file: "patches/empty_literal_on_vc.patch"
+    - patch_file: "patches/fix-mingw-and-empty-literal-on-vc.patch"
       base_path: "source_subfolder"
-    - patch_file: "patches/export_extern_windows_shared.patch"
+    - patch_file: "patches/fix-export_extern_msvc_shared.patch"
       base_path: "source_subfolder"
