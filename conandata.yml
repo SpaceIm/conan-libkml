@@ -4,9 +4,9 @@ sources:
     sha256: "ac2a61b4bca105cbed9ad8d0d6d5536dc7c2a11abcecf86431d023e2f3ae96db"
 patches:
   "1.3.0":
-    - patch_file: "patches/CMakeLists.patch"
+    - patch_file: "patches/conanize_cmakelists.patch"
       base_path: "source_subfolder"
-    - patch_file: "patches/fix-mingw-and-empty-literal-on-vc.patch"
+    - patch_file: "patches/fix-for-mingw-and-empty-literal-for-vc.patch"
       base_path: "source_subfolder"
-    - patch_file: "patches/fix-export_extern_msvc_shared.patch"
+    - patch_file: "patches/export-extern-symbols-for-msvc.patch"
       base_path: "source_subfolder"
