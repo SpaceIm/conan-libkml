@@ -3,7 +3,5 @@
 from bincrafters import build_template_default
 
 if __name__ == "__main__":
-
     builder = build_template_default.get_builder(pure_c=False, build_policy="missing", options=["boost:header_only=True"])
-
     builder.run()
