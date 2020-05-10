@@ -30,18 +30,18 @@ class LibkmlConan(ConanFile):
             del self.options.fPIC
 
     def requirements(self):
-        self.requires.add("boost/1.72.0")
-        self.requires.add("expat/2.2.9")
-        self.requires.add("minizip/1.2.11")
-        self.requires.add("uriparser/0.9.3")
-        self.requires.add("zlib/1.2.11")
+        self.requires("boost/1.72.0")
+        self.requires("expat/2.2.9")
+        self.requires("minizip/1.2.11")
+        self.requires("uriparser/0.9.3")
+        self.requires("zlib/1.2.11")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
         os.rename(self.name + "-" + self.version, self._source_subfolder)
 
     def build(self):
-        for patch in self.conan_data["patches"][self.version]:
+        for patch in self.conan_data.get("patches", {}).get(self.version, []):
             tools.patch(**patch)
         cmake = self._configure_cmake()
         cmake.build()
@@ -62,6 +62,7 @@ class LibkmlConan(ConanFile):
         tools.rmdir(os.path.join(self.package_folder, "cmake"))
 
     def package_info(self):
+        self.cpp_info.names["pkg_config"] = "LibKML"
         # Libs ordered following linkage order:
         # - kmlconvenience is a dependency of kmlregionator
         # - kmlengine is a dependency of kmlregionator and kmlconvenience
