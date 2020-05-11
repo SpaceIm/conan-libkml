@@ -62,7 +62,7 @@ class LibkmlConan(ConanFile):
         tools.rmdir(os.path.join(self.package_folder, "cmake"))
 
     def package_info(self):
-        self.cpp_info.names["pkg_config"] = "LibKML"
+        self.cpp_info.names["pkg_config"] = "libkml"
         # Libs ordered following linkage order:
         # - kmlconvenience is a dependency of kmlregionator
         # - kmlengine is a dependency of kmlregionator and kmlconvenience
